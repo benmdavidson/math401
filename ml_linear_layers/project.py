@@ -29,28 +29,38 @@ v = [x1, x2]
 # a)
 first_layer_result = first_linear_layer(v)
 y1, y2, y3 = first_layer_result
-print(first_layer_result)
 print("y1 = {}\ny2 = {}\ny3 = {}".format(y1, y2, y3))
-
+# Output:
+# y1 = -3*x1 + 3*x2
+# y2 = 3*x1 - 8*x2
+# y3 = 6*x1 + 4*x2
+#
 # b)
-# y1 < 0 into -3*x1 + 3*x2 < 0
-# y2 < 0 into 3*x1 - 8*x2 < 0
-# y3 < 0 into 6*x1 + 4*x2 < 0
-
+# y1 < 0:
+# 	    -3*x1 + 3*x2 < 0
+# 	    0 if x2 < x1
+# y2 < 0:
+# 	    3*x1 - 8*x2 < 0
+#	    0 if x2 > 3/8 * x1
+# y3 < 0:
+#       6*x1 + 4*x2 < 0
+#	    0 if x2 < -6/4 * x1
+#
 # c)
 # There are 6 cases for the Ramp operation.
 # There are 8 technical possibility cases considering parity (2^3).
-# We can see, though, that 3 intersecting lines in 2d create only 6 regions.
-# The solution for this system is at x1 = 0 and x2 = 0, that is, they intersect at (0, 0)
+# We can see, though, that 3 lines that intersect at a common point
+#   in 2d create only 6 regions.
+# Two of the 8 "possible" cases are in fact impossible.
+# Note that the cases [0, 0, 0] and [y1, 0, 0] are invalid for this example.
 
-# Note that the cases [0, 0, 0] and [y1, y2, y3] are invalid
-c = 6
-case_1 = [y1, y2, 0]
-case_2 = [y1, 0, y3]
-case_3 = [y1, 0, 0]
+case_1 = [y1, y2, y3]
+case_2 = [y1, y2, 0]
+case_3 = [0, y2, 0]
 case_4 = [0, y2, y3]
-case_5 = [0, y2, 0]
-case_6 = [0, 0, y3]
+case_5 = [0, 0, y3]
+case_6 = [y1, 0, y3]
+
 cases = [case_1, case_2, case_3, case_4, case_5, case_6]
 
 # d)
@@ -59,25 +69,31 @@ results = map(second_linear_layer, cases)
 print("Cases: ")
 idx = 1
 for case in results:
-	print("Case {} -> z1 = {} , z2 = {}".format(idx, case[0], case[1]))
-	idx += 1
-	# This prints: 
-	# Cases:
-	# Case 1 -> z1 = -18*x1 + 43*x2 , z2 = 9*x1 - 4*x2
-	# Case 2 -> z1 = 21*x1 + 19*x2 , z2 = 42*x1 + 8*x2
-	# Case 3 -> z1 = -3*x1 + 3*x2 , z2 = 12*x1 - 12*x2
-	# Case 4 -> z1 = 9*x1 + 56*x2 , z2 = 27*x1 + 28*x2
-	# Case 5 -> z1 = -15*x1 + 40*x2 , z2 = -3*x1 + 8*x2
-	# Case 6 -> z1 = 24*x1 + 16*x2 , z2 = 30*x1 + 20*x2
-
+    print("Case {} -> z1 = {} , z2 = {}".format(idx, case[0], case[1]))
+    idx += 1
+# Output:
+# Cases:
+# Case 1 -> z1 = 6*x1 + 59*x2 , z2 = 39*x1 + 16*x2
+# Case 2 -> z1 = -18*x1 + 43*x2 , z2 = 9*x1 - 4*x2
+# Case 3 -> z1 = -15*x1 + 40*x2 , z2 = -3*x1 + 8*x2
+# Case 4 -> z1 = 9*x1 + 56*x2 , z2 = 27*x1 + 28*x2
+# Case 5 -> z1 = 24*x1 + 16*x2 , z2 = 30*x1 + 20*x2
+# Case 6 -> z1 = 21*x1 + 19*x2 , z2 = 42*x1 + 8*x2
+#
 # e)
 # Cases: 
-# Case 1 -> -18*x1 + 43*x2 > 0 and 9*x1 - 4*x2 > 0
-# Case 2 -> 21*x1 + 19*x2 > 0 and 42*x1 + 8*x2 > 0
-# Case 3 -> -3*x1 + 3*x2 > 0 and 12*x1 - 12*x2 > 0
+# Case 1 -> 6*x1 + 59*x2 > 0 and 39*x1 + 16*x2 > 0
+#           x2 > (6/59)*x1       x2 < (-39/16)*x1 
+# Case 2 -> -18*x1 + 43*x2 > 0 and 9*x1 - 4*x2 > 0 
+#            x2 > (18/43)*x1       x2 < (9/4)*x1
+# Case 3 -> -15*x1 + 40*x2 > 0 and -3*x1 + 8*x2 > 0
+#            x2 > (15/40)*x1        x2 > (3/8)*x1 
 # Case 4 -> 9*x1 + 56*x2 > 0 and 27*x1 + 28*x2 > 0
-# Case 5 -> -15*x1 + 40*x2 > 0 and -3*x1 + 8*x2 > 0
-# Case 6 -> 24*x1 + 16*x2 > 0 and 30*x1 + 20*x2 > 01
+#           x2 > (-9/56)*x1      x2 > (-9/56)*x1
+# Case 5 -> 24*x1 + 16*x2 > 0 and 30*z1 + 20*x2 > 0
+#           x2 > (-9/56)*x1       x2 > (-30/20)*x1
+# Case 6 -> 21*x1 + 19*x2 > 0 and 42*z1 + 8*x2 > 0
+#           x2 > (-21/19)*x1      x2 > (-21/19)*x1 
 #
 # The conditions for which x1 and x2 are mapped to the first quadrant depend
 # on the case of the Ramp operation because the third layer is a linear layer.
@@ -88,46 +104,136 @@ for case in results:
 # x1 and x2 for each case.
 
 # f)
-# Using matplot lib to draw these regions
+# Using matplotlib to draw these regions
 
 x = np.arange(-1, 1, .001)
+y1 = x
+y2 = (3/8)*x
+y3 = (-6/4)*x
+
+def graph_util(z1, z2):
+	plt.clf()
+	plt.xlim([-1, 1])
+	plt.ylim([-1, 1])
+	plt.grid()
+	plt.plot(x, y1, 'r')
+	plt.plot(x, y2, 'g')
+	plt.plot(x, y3, 'b')
+	plt.plot(x, z1, 'y')
+	plt.plot(x, z2, 'y')
+
 # Case 1
-# -18*x1 + 43*x2 > 0 and 9*x1 - 4*x2 > 0
-plt.clf()
-plt.xlim([-1, 1])
-plt.ylim([-100, 100])
-plt.grid()
-z1 = (18 / 43)*x
-z2 = (9 / 4)*x
-plt.plot(x, z1, 'r')
-plt.plot(x, z2, 'g')
-plt.fill_between(x, z1, z2, where = x > 0) 
+# 6*x1 + 59*x2 > 0 and 39*x1 + 16*x2 > 0
+# x2 > (6/59)*x1
+z1 = (6/59)*x
+# x2 < (-39/16)*x1
+z2 = (-39/16)*x
+graph_util(z1, z2)
+plt.fill_between(x, z1, y3, where = x < 0, color = 'grey', alpha = 0.5) 
+plt.title('Case 1 Region')
 plt.savefig('case_1_region.png')
 
 # Case 2
-# 21*x1 + 19 * x2 > 0 and 42*x1 + 8*x2 > 0
-plt.clf()
-plt.xlim([-1, 1])
-plt.ylim([-1, 1])
-plt.grid()
-z1 = (-21 / 19)*x
-z2 = (-42 / 8)*x
-plt.plot(x, z1, 'r')
-plt.plot(x, z2, 'g')
-Z1 = np.maximum(z1, z2)
-plt.fill_between(x, Z1, np.max(z1)) 
+# -18*x1 + 43*x2 > 0 and 9*x1 - 4*x2 > 0 
+# x2 > (18/43)*x1
+z1 = (18/43)*x
+# x2 < (9/4)*x1
+z2 = (9/4)*x
+graph_util(z1, z2)
+plt.fill_between(x, z1, y1, where = x < 0, color = 'grey', alpha = 0.5) 
+plt.title('Case 2 Region')
 plt.savefig('case_2_region.png')
 
 # Case 3
-# -3*x1 + 3*x2 > 0 and 12*x1 - 12*x2 > 0 
+# -15*x1 + 40*x2 > 0 and -3*x1 + 8*x2 > 0
+# x2 > (15/40)*x1
+z1 = (15/40)*x
+# x2 > (3/8)*x1
+z2 = (3/8)*x
+graph_util(z1, z2)
+plt.fill_between(x, z1, z2, color = 'grey', alpha = 0.5) 
+plt.title('Case 3 Region')
+plt.savefig('case_3_region.png')
+
+# Case 4
+# 9*x1 + 56*x2 > 0 and 27*x1 + 28*x2 > 0
+# x2 > (-9/56)*x1
+z1 = (-9/56)*x
+# x2 > (-27/28)*x1
+z2 = (-27/28)*x
+graph_util(z1, z2)
+plt.fill_between(x, z1, z2, where = x > 0, color = 'grey', alpha = 0.5) 
+plt.title('Case 4 Region')
+plt.savefig('case_4_region.png')
+
+# Case 5
+# 24*x1 + 16*x2 > 0 and 30*z1 + 20*x2 > 0
+# x2 > (-24/16)*x1
+z1 = (-24/16)*x
+# x2 > (-30/20)*x1
+z2 = (-30/20)*x
+graph_util(z1, z2)
+plt.fill_between(x, z1, z2, color = 'grey', alpha = 0.5) 
+plt.title('Case 5 Region')
+plt.savefig('case_5_region.png')
+
+# Case 6
+# 21*x1 + 19*x2 > 0 and 42*z1 + 8*x2 > 0
+# x2 > (-21/19)*x1
+z1 = (-21/19)*x
+# x2 > (-42/8)*x1
+z2 = (-42/9)*x
+graph_util(z1, z2)
+plt.fill_between(x, y3, z2, where = x < 0, color = 'grey', alpha = 0.5) 
+plt.title('Case 6 Region')
+plt.savefig('case_6_region.png')
+
+# Combined Graphic
+
 plt.clf()
 plt.xlim([-1, 1])
 plt.ylim([-1, 1])
 plt.grid()
-z1 = x
-z2 = x
-plt.plot(x, z1, 'r')
-plt.plot(x, z2, 'g')
-Z1 = np.maximum(z1, z2)
-plt.fill_between(x, Z1, np.max(z1)) 
-plt.savefig('case_3_region.png')
+plt.plot(x, y1, 'r')
+plt.plot(x, y2, 'g')
+plt.plot(x, y3, 'b')
+
+# Case 1
+z1 = (6/59)*x
+z2 = (-39/16)*x
+plt.fill_between(x, z1, y3, where = x < 0, color = 'grey', alpha = 0.5) 
+# Case 2
+z1 = (18/43)*x
+z2 = (9/4)*x
+plt.fill_between(x, z1, y1, where = x < 0, color = 'grey', alpha = 0.5) 
+# Case 3
+z1 = (15/40)*x
+z2 = (3/8)*x
+plt.fill_between(x, z1, z2, color = 'grey', alpha = 0.5) 
+# Case 4
+z1 = (-9/56)*x
+z2 = (-27/28)*x
+plt.fill_between(x, z1, z2, where = x > 0, color = 'grey', alpha = 0.5) 
+# Case 5
+z1 = (-24/16)*x
+z2 = (-30/20)*x
+plt.fill_between(x, z1, z2, color = 'grey', alpha = 0.5) 
+# Case 6
+z1 = (-21/19)*x
+z2 = (-42/9)*x
+plt.fill_between(x, y3, z2, where = x < 0, color = 'grey', alpha = 0.5) 
+plt.title('Combined Graphic')
+plt.savefig('combined_graphic.png')
+
+# 2.
+X = np.random.uniform(-1, 1, [1000, 2])
+results = np.array(list(map(second_linear_layer, map(ramp, map(first_linear_layer, X)))))
+
+plt.clf()
+plt.xlim([-60, 60])
+plt.ylim([-60, 60])
+plt.axvline(0, 0, 1, color = 'r')
+plt.axhline(0, 0, 1, color = 'r')
+plt.scatter(results[:,0], results[:,1])
+plt.title("Neural Network Output")
+plt.savefig('scatter_plot.png')
