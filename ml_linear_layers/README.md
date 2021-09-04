@@ -1,8 +1,7 @@
 # Linear Layers
 This project implements simple Linear Layers and a Ramp function to create <br />
-a 3 layer neural network that takes random 2d points and maps them to *hopefully*
-the first quadrant.
-
+a 3 layer neural network that takes random 2d points and maps them to different values.
+The gray shaded regions are calculated to be the points which will map to the first quadrant.
 ![combined](images/combined_graphic.png?raw=true "Title")
 ![combined](images/scatter_plot.png?raw=true "Title")
 
