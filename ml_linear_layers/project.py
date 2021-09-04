@@ -131,7 +131,7 @@ z2 = (-39/16)*x
 graph_util(z1, z2)
 plt.fill_between(x, z1, y3, where = x < 0, color = 'grey', alpha = 0.5) 
 plt.title('Case 1 Region')
-plt.savefig('case_1_region.png')
+plt.savefig('images/case_1_region.png')
 
 # Case 2
 # -18*x1 + 43*x2 > 0 and 9*x1 - 4*x2 > 0 
@@ -142,7 +142,7 @@ z2 = (9/4)*x
 graph_util(z1, z2)
 plt.fill_between(x, z1, y1, where = x < 0, color = 'grey', alpha = 0.5) 
 plt.title('Case 2 Region')
-plt.savefig('case_2_region.png')
+plt.savefig('images/case_2_region.png')
 
 # Case 3
 # -15*x1 + 40*x2 > 0 and -3*x1 + 8*x2 > 0
@@ -153,7 +153,7 @@ z2 = (3/8)*x
 graph_util(z1, z2)
 plt.fill_between(x, z1, z2, color = 'grey', alpha = 0.5) 
 plt.title('Case 3 Region')
-plt.savefig('case_3_region.png')
+plt.savefig('images/case_3_region.png')
 
 # Case 4
 # 9*x1 + 56*x2 > 0 and 27*x1 + 28*x2 > 0
@@ -164,7 +164,7 @@ z2 = (-27/28)*x
 graph_util(z1, z2)
 plt.fill_between(x, z1, z2, where = x > 0, color = 'grey', alpha = 0.5) 
 plt.title('Case 4 Region')
-plt.savefig('case_4_region.png')
+plt.savefig('images/case_4_region.png')
 
 # Case 5
 # 24*x1 + 16*x2 > 0 and 30*z1 + 20*x2 > 0
@@ -175,7 +175,7 @@ z2 = (-30/20)*x
 graph_util(z1, z2)
 plt.fill_between(x, z1, z2, color = 'grey', alpha = 0.5) 
 plt.title('Case 5 Region')
-plt.savefig('case_5_region.png')
+plt.savefig('images/case_5_region.png')
 
 # Case 6
 # 21*x1 + 19*x2 > 0 and 42*z1 + 8*x2 > 0
@@ -186,7 +186,7 @@ z2 = (-42/9)*x
 graph_util(z1, z2)
 plt.fill_between(x, y3, z2, where = x < 0, color = 'grey', alpha = 0.5) 
 plt.title('Case 6 Region')
-plt.savefig('case_6_region.png')
+plt.savefig('images/case_6_region.png')
 
 # Combined Graphic
 
@@ -223,7 +223,7 @@ z1 = (-21/19)*x
 z2 = (-42/9)*x
 plt.fill_between(x, y3, z2, where = x < 0, color = 'grey', alpha = 0.5) 
 plt.title('Combined Graphic')
-plt.savefig('combined_graphic.png')
+plt.savefig('images/combined_graphic.png')
 
 # 2.
 X = np.random.uniform(-1, 1, [1000, 2])
@@ -236,4 +236,4 @@ plt.axvline(0, 0, 1, color = 'r')
 plt.axhline(0, 0, 1, color = 'r')
 plt.scatter(results[:,0], results[:,1])
 plt.title("Neural Network Output")
-plt.savefig('scatter_plot.png')
+plt.savefig('images/scatter_plot.png')
