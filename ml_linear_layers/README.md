@@ -1,5 +1,5 @@
-![combined](case_1_region.png?width=50% height=50% "Title")
-<img src="case_1_region.png" width=50% height=50%>
+![combined](combined_graphic.png?raw=true "Title")
+
 ![figure 1](case_1_region.png?raw=true "Title")
 ![figure 2](case_2_region.png?raw=true "Title")
 ![figure 3](case_3_region.png?raw=true "Title")
