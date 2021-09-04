@@ -232,8 +232,11 @@ results = np.array(list(map(second_linear_layer, map(ramp, map(first_linear_laye
 plt.clf()
 plt.xlim([-60, 60])
 plt.ylim([-60, 60])
-plt.axvline(0, 0, 1, color = 'r')
-plt.axhline(0, 0, 1, color = 'r')
-plt.scatter(results[:,0], results[:,1])
+plt.axvline(0, 0, 1, color = 'k')
+plt.axhline(0, 0, 1, color = 'k')
+x_vals = results[:,0]
+y_vals = results[:,1]
+col = np.where(x_vals < 0, 'b', np.where(y_vals < 0, 'b', 'r'))
+plt.scatter(x_vals, y_vals, c=col)
 plt.title("Neural Network Output")
 plt.savefig('images/scatter_plot.png')
