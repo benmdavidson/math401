@@ -1,4 +1,4 @@
-![combined](combined_graphic.png?raw=true "Title")
+![combined](images/combined_graphic.png?raw=true "Title")
 
 ![figure 1](images/case_1_region.png?raw=true "Title")
 ![figure 2](images/case_2_region.png?raw=true "Title")
