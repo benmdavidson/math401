@@ -81,7 +81,7 @@ for case in results:
 # e)
 # Cases: 
 # Case 1 -> 6*x1 + 59*x2 > 0 and 39*x1 + 16*x2 > 0
-#           x2 > (6/59)*x1       x2 < (-39/16)*x1 
+#           x2 > (6/59)*x1       x2 > (-39/16)*x1 
 # Case 2 -> -18*x1 + 43*x2 > 0 and 9*x1 - 4*x2 > 0 
 #            x2 > (18/43)*x1       x2 < (9/4)*x1
 # Case 3 -> -15*x1 + 40*x2 > 0 and -3*x1 + 8*x2 > 0
@@ -124,10 +124,10 @@ def graph_util(z1, z2):
 # 6*x1 + 59*x2 > 0 and 39*x1 + 16*x2 > 0
 # x2 > (6/59)*x1
 z1 = (6/59)*x
-# x2 < (-39/16)*x1
+# x2 > (-39/16)*x1
 z2 = (-39/16)*x
 graph_util(z1, z2)
-plt.fill_between(x, z1, y3, where = x < 0, color = 'grey', alpha = 0.5) 
+plt.fill_between(x, z1, z1, where = x > 0, color = 'grey', alpha = 0.5) 
 plt.title('Case 1 Region')
 plt.savefig('images/case_1_region.png')
 
