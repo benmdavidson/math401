@@ -199,7 +199,7 @@ plt.plot(x, y3, 'b')
 # Case 1
 z1 = (6/59)*x
 z2 = (-39/16)*x
-plt.fill_between(x, z1, z1, where = x > 0, color = 'grey', alpha = 0.5) 
+plt.fill_between(x, z1, y3, where = x < 0, color = 'grey', alpha = 0.5) 
 # Case 2
 z1 = (18/43)*x
 z2 = (9/4)*x
