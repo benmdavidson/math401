@@ -8,6 +8,9 @@ The gray shaded regions are calculated to be the points which will map to the fi
 ![combined](images/scatter_plot.png?raw=true "Title")
 <br />
 
+![combined](images/case_regions.png?raw=true "Title")
+<br />
+
 ![figure 1](images/case_1_region.png?raw=true "Title")
 <br />
 
