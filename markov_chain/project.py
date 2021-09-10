@@ -84,7 +84,7 @@ plt.ylabel("Probability of Disease")
 plt.plot(time_axis, artemis, color='r')
 plt.plot(time_axis, luna, color='g')
 plt.plot(time_axis, selene, color='b')
-plt.savefig("images/timeseries.jpg")
+plt.savefig("images/timeseries.png")
 
 # 3. b)
 # day n = 21
