@@ -52,7 +52,7 @@ print("y1 = {}\ny2 = {}\ny3 = {}".format(y1, y2, y3))
 # Two of the 8 "possible" cases are in fact impossible.
 # Note that the cases [0, 0, 0] and [y1, 0, 0] are invalid for this example.
 
-case_1 = [y1, y2, y3]
+case_1 = [y1, 0, 0]
 case_2 = [y1, y2, 0]
 case_3 = [0, y2, 0]
 case_4 = [0, y2, y3]
@@ -71,7 +71,7 @@ for case in results:
     idx += 1
 # Output:
 # Cases:
-# Case 1 -> z1 = 6*x1 + 59*x2 , z2 = 39*x1 + 16*x2
+# Case 1 -> z1 = -3*x1 + 3*x2 , z2 = 12*x1 - 12*x2
 # Case 2 -> z1 = -18*x1 + 43*x2 , z2 = 9*x1 - 4*x2
 # Case 3 -> z1 = -15*x1 + 40*x2 , z2 = -3*x1 + 8*x2
 # Case 4 -> z1 = 9*x1 + 56*x2 , z2 = 27*x1 + 28*x2
@@ -80,27 +80,23 @@ for case in results:
 #
 # e)
 # Cases: 
-# Case 1 -> 6*x1 + 59*x2 > 0 and 39*x1 + 16*x2 > 0
-#           x2 > (6/59)*x1       x2 < (-39/16)*x1 
+# Case 1 -> -3*x1 + 3*x2 > 0 , 12*z1 - 12*x2 > 0
+#			x2 > x1              x2 < x1
 # Case 2 -> -18*x1 + 43*x2 > 0 and 9*x1 - 4*x2 > 0 
 #            x2 > (18/43)*x1       x2 < (9/4)*x1
 # Case 3 -> -15*x1 + 40*x2 > 0 and -3*x1 + 8*x2 > 0
 #            x2 > (15/40)*x1        x2 > (3/8)*x1 
 # Case 4 -> 9*x1 + 56*x2 > 0 and 27*x1 + 28*x2 > 0
-#           x2 > (-9/56)*x1      x2 > (-9/56)*x1
+#           x2 > (-9/56)*x1      x2 > (-27/28)*x1
 # Case 5 -> 24*x1 + 16*x2 > 0 and 30*z1 + 20*x2 > 0
-#           x2 > (-9/56)*x1       x2 > (-30/20)*x1
+#           x2 > (-24/16)*x1       x2 > (-30/20)*x1
 # Case 6 -> 21*x1 + 19*x2 > 0 and 42*z1 + 8*x2 > 0
-#           x2 > (-21/19)*x1      x2 > (-21/19)*x1 
+#           x2 > (-21/19)*x1      x2 > (-42/8)*x1 
 #
-# The conditions for which x1 and x2 are mapped to the first quadrant depend
-# on the case of the Ramp operation because the third layer is a linear layer.
-# This means that a linear transformation is being performed on the result of
-# the ramp operation. Each case of the Ramp operation represents a different
-# and disjoint region of 2d space. Mapping these 6 distinct regions to the
-# same target region (quadrant 1) is what leads to different restrictions on
-# x1 and x2 for each case.
-
+# The ramp operation is what the case depends on because for each case, the 
+# vector (y1, y2, y3) output by the ramp function is different, consequently affecting
+# the output vector after the second linear layer.
+#
 # f)
 # Using matplotlib to draw these regions
 
@@ -122,12 +118,12 @@ def graph_util(z1, z2):
 
 # Case 1
 # 6*x1 + 59*x2 > 0 and 39*x1 + 16*x2 > 0
-# x2 > (6/59)*x1
-z1 = (6/59)*x
-# x2 < (-39/16)*x1
-z2 = (-39/16)*x
+# x2 > x1
+z1 = x
+# x2 < x1
+z2 = x
 graph_util(z1, z2)
-plt.fill_between(x, z1, y3, where = x < 0, color = 'grey', alpha = 0.5) 
+# No region
 plt.title('Case 1 Region')
 plt.savefig('images/case_1_region.png')
 
@@ -138,7 +134,7 @@ z1 = (18/43)*x
 # x2 < (9/4)*x1
 z2 = (9/4)*x
 graph_util(z1, z2)
-plt.fill_between(x, z1, y1, where = x < 0, color = 'grey', alpha = 0.5) 
+# No region
 plt.title('Case 2 Region')
 plt.savefig('images/case_2_region.png')
 
@@ -149,7 +145,7 @@ z1 = (15/40)*x
 # x2 > (3/8)*x1
 z2 = (3/8)*x
 graph_util(z1, z2)
-plt.fill_between(x, z1, z2, color = 'grey', alpha = 0.5) 
+# No region
 plt.title('Case 3 Region')
 plt.savefig('images/case_3_region.png')
 
@@ -160,7 +156,7 @@ z1 = (-9/56)*x
 # x2 > (-27/28)*x1
 z2 = (-27/28)*x
 graph_util(z1, z2)
-plt.fill_between(x, z1, z2, where = x > 0, color = 'grey', alpha = 0.5) 
+plt.fill_between(x, z1, y2, where = x > 0, color = 'grey', alpha = 0.5) 
 plt.title('Case 4 Region')
 plt.savefig('images/case_4_region.png')
 
@@ -171,7 +167,7 @@ z1 = (-24/16)*x
 # x2 > (-30/20)*x1
 z2 = (-30/20)*x
 graph_util(z1, z2)
-plt.fill_between(x, z1, z2, color = 'grey', alpha = 0.5) 
+plt.fill_between(x, y1, y2, where = x > 0, color = 'grey', alpha = 0.5) 
 plt.title('Case 5 Region')
 plt.savefig('images/case_5_region.png')
 
@@ -182,7 +178,8 @@ z1 = (-21/19)*x
 # x2 > (-42/8)*x1
 z2 = (-42/9)*x
 graph_util(z1, z2)
-plt.fill_between(x, y3, z2, where = x < 0, color = 'grey', alpha = 0.5) 
+Z1 = np.maximum(y1, z2)
+plt.fill_between(x, Z1, np.max(x), color = 'grey', alpha = 0.5) 
 plt.title('Case 6 Region')
 plt.savefig('images/case_6_region.png')
 
@@ -197,13 +194,12 @@ plt.plot(x, y2, 'g')
 plt.plot(x, y3, 'b')
 
 # Case 1
-z1 = (6/59)*x
-z2 = (-39/16)*x
-plt.fill_between(x, z1, y3, where = x < 0, color = 'grey', alpha = 0.5) 
+z1 = x
+z2 = x
+plt.fill_between(x, z1, z1, where = x < 0, color = 'grey', alpha = 0.5) 
 # Case 2
 z1 = (18/43)*x
 z2 = (9/4)*x
-plt.fill_between(x, z1, y1, where = x < 0, color = 'grey', alpha = 0.5) 
 # Case 3
 z1 = (15/40)*x
 z2 = (3/8)*x
@@ -211,15 +207,16 @@ plt.fill_between(x, z1, z2, color = 'grey', alpha = 0.5)
 # Case 4
 z1 = (-9/56)*x
 z2 = (-27/28)*x
-plt.fill_between(x, z1, z2, where = x > 0, color = 'grey', alpha = 0.5) 
+plt.fill_between(x, z1, y2, where = x > 0, color = 'grey', alpha = 0.5) 
 # Case 5
 z1 = (-24/16)*x
 z2 = (-30/20)*x
-plt.fill_between(x, z1, z2, color = 'grey', alpha = 0.5) 
+plt.fill_between(x, y1, y2, where = x > 0, color = 'grey', alpha = 0.5) 
 # Case 6
 z1 = (-21/19)*x
 z2 = (-42/9)*x
-plt.fill_between(x, y3, z2, where = x < 0, color = 'grey', alpha = 0.5) 
+Z1 = np.maximum(y1, z2)
+plt.fill_between(x, Z1, np.max(x), color = 'grey', alpha = 0.5) 
 plt.title('Combined Graphic')
 plt.savefig('images/combined_graphic.png')
 
