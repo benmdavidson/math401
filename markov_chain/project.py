@@ -28,7 +28,7 @@ x8 = x4 @ x4
 x16 = x8 @ x8
 x32 = x16 @ x16
 x64 = x32 @ x32
-#print("x2 = {}\nx4 = {}\nx8 = {}\nx16 = {}\nx32 = {}\nx64 = {}".
+# print("x2 = {}\nx4 = {}\nx8 = {}\nx16 = {}\nx32 = {}\nx64 = {}".
 #   format(x2, x4, x8, x16, x32, x64))
 # Output:
 # x2 = [[0.8281 0.0042 0.111 ]
@@ -95,12 +95,12 @@ p21 = x21 @ p0
 
 # 3. c)
 eigvals, eigvecs = np.linalg.eig(A)
-print("eigenvalues: \n{}".format(eigvals))
-print("largest eigenvalue: {}".format(max(eigvals)))
+# print("eigenvalues: \n{}".format(eigvals))
+# print("largest eigenvalue: {}".format(max(eigvals)))
 # Output:
 # [0.89+0.06164414j, 0.89-0.06164414j, 1. 0.j]
 
-print("eigenvectors: \n{}".format(eigvecs))
+# print("eigenvectors: \n{}".format(eigvecs))
 # Output:
 # [-0.28426762+0.43808583j, -0.28426762-0.43808583j, 0.4516129 +0.j],
 #       [ 0.63960215+0.j, 0.63960215-0.j, 0.58064516+0.j],
@@ -108,10 +108,10 @@ print("eigenvectors: \n{}".format(eigvecs))
 
 # The third column is the dominant eigenvector because its eigenvalue is 1.
 dom = np.real(eigvecs[:,2])
-print(dom)
+# print(dom)
 # Dominant eigenvector [0.4516129  0.58064516 0.67741935]
 dom_probability = dom / sum(dom)
-print(dom_probability)
+# print(dom_probability)
 # Dominant eigenvector as probability vec [0.26415094 0.33962264 0.39622642]
 
 # 3. d)
