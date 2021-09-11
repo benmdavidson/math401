@@ -28,8 +28,16 @@ x8 = x4 @ x4
 x16 = x8 @ x8
 x32 = x16 @ x16
 x64 = x32 @ x32
+x_diff = sum(sum(abs(x2 - A)))
+x2_diff = sum(sum(abs(x4-x2)))
+x4_diff = sum(sum(abs(x8-x4)))
+x8_diff = sum(sum(abs(x16-x8)))
+x16_diff = sum(sum(abs(x32-x16)))
+x32_diff = sum(sum(abs(x64-x32)))
 # print("x2 = {}\nx4 = {}\nx8 = {}\nx16 = {}\nx32 = {}\nx64 = {}".
 #   format(x2, x4, x8, x16, x32, x64))
+# print("x_diff = {}\nx2_diff = {}\nx4_diff = {}\nx8_diff = {}\nx16_diff = {}\nx32_diff = {}".
+#   format(x_diff, x2_diff, x4_diff, x8_diff, x16_diff, x32_diff))
 # Output:
 # x2 = [[0.8281 0.0042 0.111 ]
 #  [0.1656 0.8649 0.0054]
@@ -49,6 +57,18 @@ x64 = x32 @ x32
 # x64 = [[0.26410584 0.26450504 0.2638775 ]
 #  [0.3391366  0.33946952 0.34007791]
 #  [0.39675757 0.39602543 0.39604459]]
+#
+# To calculate the closeness of these matrices, I computed the sum of their
+# absolute elementwise-difference. The output shows that initially, the matrices
+# increase, but thafter x16 the elements begin to become much closer, with the
+# element-wise total difference between x64 and x32 only being 0.107.
+# Output:
+# x_diff = 0.40679999999999994
+# x2_diff = 0.7156921200000002
+# x4_diff = 1.0718556680104574
+# x8_diff = 1.0772117528973573
+# x16_diff = 0.6149686760406601
+# x32_diff = 0.10707324031657456
 
 # 2.
 # n = 21
