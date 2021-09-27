@@ -103,7 +103,7 @@ for i in range(-3, 4):
 # 6)
 M = np.array(m)
 T = np.array([[-1, -1, 0], [1, -1, 0], [0, 1, -1]])
-points = T @ np.transpose(M)
+points = np.transpose(M @ T)
 
 # 7)
 A = np.array([[3, 2, 1],
