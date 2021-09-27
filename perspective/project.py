@@ -28,8 +28,8 @@ R = np.array([[np.cos(theta), -np.sin(theta)],
 # This effecitvely rotates the points about the pivot.
 def perform_rotation(points):
     rotate = lambda x: R @ x
-    translate_to_origin = lambda x: x - S[-1]
-    translate_back = lambda x: x + S[-1]
+    translate_to_origin = lambda x: x - points[-1]
+    translate_back = lambda x: x + points[-1]
     return np.array(list(map(translate_back, map(rotate, map(translate_to_origin, points)))))
 
 def graph_rotation(title, file_name, points):
@@ -56,14 +56,17 @@ def get_translation_matrix(x, y):
                      [0, 1, y],
                      [0, 0, 1]])
 
-translated = np.copy(S)
-for count, p in enumerate(S):
-    translated[count] = (get_translation_matrix(offsets[count][0], offsets[count][1]) @ (np.append(p,[1])))[:2]
+translation_matrices = list(map(get_translation_matrix, offsets[:,0], offsets[:,1]))
+S1 = S.copy()
+S1 = np.transpose(S1)
+S1 = np.vstack([(S1), np.ones(len(S1[0]))])
+for matrix in translation_matrices:
+    S1 = matrix @ S1
 
-plt.xlim(-6, 6)
-plt.ylim(-6, 6)
-x = translated[:,0]
-y = translated[:,1]
+plt.xlim(-8, -4)
+plt.ylim(2, 6)
+x = S1[0,:]
+y = S1[1,:]
 plt.title("Post Translation")
 scatter = plt.scatter(x, y, c=colors)
 plt.savefig("images/translated_scatter_0.png")
@@ -78,7 +81,8 @@ def perform_rotation_trans(points):
     plt.scatter(x, y, c=colors)
     return result
 
-result1 = perform_rotation_trans(translated)
+S1 = S1[:-1,:]
+result1 = perform_rotation_trans(np.transpose(S1))
 result2 = perform_rotation_trans(result1)
 result3 = perform_rotation_trans(result2)
 perform_rotation_trans(result3)
@@ -99,42 +103,40 @@ for i in range(-3, 4):
 # 6)
 M = np.array(m)
 T = np.array([[-1, -1, 0], [1, -1, 0], [0, 1, -1]])
-points = np.transpose(M @ T)
+points = T @ np.transpose(M)
+
 # 7)
-rx = np.array([[1, 0, 0, 0],
-               [0, np.cos(np.radians(116.6)), -np.sin(np.radians(116.6)), 0],
-               [0, np.sin(np.radians(116.6)), np.cos(np.radians(116.6)), 0],
-               [0, 0, 0, 1]])
+A = np.array([[3, 2, 1],
+              [1, 0, 0],
+              [0, 1, 0]])
 
-ry = np.array([[np.cos(np.radians(107.4)), 0, np.sin(np.radians(108.4)), 0],
-               [0, 1, 0, 0],
-               [-np.sin(np.radians(108.4)), 0, np.cos(np.radians(108.4)), 0],
-               [0, 0, 0, 1]])
+# do gram schmidt on A and rearrange coordinates so it's [x,y,z] again
+A_gs = np.linalg.qr(A)[0]
+A_gs_moved = np.array([A_gs[1], A_gs[2], A_gs[0]])
 
-rz = np.array([[np.cos(np.radians(123.7)), -np.sin(np.radians(123.7)), 0, 0],
-               [np.sin(np.radians(123.7)), np.cos(np.radians(123.7)), 0, 0],
-               [0, 0, 1, 0],
-               [0, 0, 0, 1]])
-
-T = np.array([[1, 0, 0, 0],
-              [0, 1, 0, 0],
-              [0, 0, 1, 0],
-              [0, 0, 0, 1]])
-
+# projection matrix with d = distance between (3,2,1) and (0,0,0)
 P = np.array([[1, 0, 0, 0],
               [0, 1, 0, 0],
               [0, 0, 0, 0],
               [0, 0, -1/3.741657, 1]])
 
-points = np.vstack([points, np.ones(len(points[0]))])
-proj = P @ T @ rz @ ry @ rx @ points
-for i in range(len(points[0])):
+with_perspective = A_gs_moved @ points
+points = np.vstack([with_perspective, np.ones(len(points[0]))])
+
+filtered = np.transpose(points)
+filter_points = [True] * filtered.shape[0]
+for c, v in enumerate(filtered):
+    if v[2] > 0:
+        filter_points[c] = False
+    
+post_filter = np.transpose(filtered[filter_points])
+
+proj = P @ post_filter
+for i in range(len(proj[0])):
     proj[:,i] /= proj[3,i]
 
 x = proj[0,:]
 y = proj[1,:]
 plt.clf()
-plt.xlim(-20, 20)
-plt.ylim(-20, 20)
 plt.scatter(x, y)
 plt.savefig("images/projection.png")
